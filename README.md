@@ -29,7 +29,7 @@ Large input and intermediate data files are not stored in this repository (see `
 - STARR-seq enhancer activity data (LNCaP, ARBS/positive-control/negative-control regions): Huang et al., *Genome Biology* 2021 (publicly available).
 - Saturation-mutagenesis data for 40 AR enhancers (Tekoglu et al., manuscript in preparation): NCBI GEO accession [GSE335266](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE335266).
 - TF expression data: DepMap Public 25Q2 release ([depmap.org](https://depmap.org/portal/download/all/)).
-- TF motif models: [JASPAR 2024 CORE](https://jaspar.elixir.no/) (*Homo sapiens*) and [HOCOMOCO v12 CORE](https://hocomoco12.autosome.org/).
+- TF motif models: [JASPAR 2024 CORE](https://jaspar.elixir.no/) (*Homo sapiens*) and [HOCOMOCO v12 CORE](https://hocomoco14.autosome.org/downloads_v12).
 - Prostate cancer GWAS risk variants: [GWAS Catalog](https://www.ebi.ac.uk/gwas/), trait MONDO_0008315.
 
 Expected local layout (gitignored):
