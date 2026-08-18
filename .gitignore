@@ -1,0 +1,10 @@
+input_files/
+output_files/*
+!output_files/*.pkl
+!output_files/*.npy
+!output_files/*.joblib
+output_files/Contribution_profiles_*.npy
+output_files/FeaturesDict_*.pkl
+__pycache__/
+.ipynb_checkpoints/
+*.pyc

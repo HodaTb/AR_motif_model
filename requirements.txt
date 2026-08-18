@@ -1,0 +1,23 @@
+# Core modeling stack (versions match the cluster environment used to produce the
+# manuscript's results).
+tensorflow==2.19.1
+keras==3.11.3
+
+numpy
+pandas
+scipy
+scikit-learn
+
+# Plotting / figures
+matplotlib
+matplotlib-venn
+seaborn
+upsetplot
+
+# Data handling / bioinformatics
+biopython
+liftover
+joblib
+
+# Running the analysis notebooks
+jupyter
