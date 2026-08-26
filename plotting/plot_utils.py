@@ -1,3 +1,5 @@
+"""Shared plotting utilities: bootstrap CI, ranked TF-weight bar plots, and
+significant-TF selection."""
 import numpy as np
 import matplotlib.pyplot as plt
 

@@ -1,4 +1,5 @@
-
+"""In-silico saturation mutagenesis: per-position/allele predicted effects
+(MutationalProfiles) and their per-TF decomposition (ContributionProfiles)."""
 import numpy as np
 
 class MutationalProfiles:
@@ -51,8 +52,7 @@ class MutationalProfiles:
 
             mutated_all = self.mutate_seqs([seqs[s]])
             Xmm = self.transformer(mutated_all)
-            print(s, end = ',')
-            
+
             pw_ = self.model.predict(np.reshape(Xww[s], (-1,len(Xww[s]))))
             pm_ = self.model.predict(Xmm)
                 
@@ -72,21 +72,27 @@ class ContributionProfiles(MutationalProfiles):
     Calculates importance scores by detangling individual TF contributions 
     using model coefficients (coef_ and intercept_).
     """
-    def compute_contribution_profiles(self, seqs, TF_inds):
+    def compute_contribution_profiles(self, seqs, TF_inds, batch_pos=100):
         seq_len = len(seqs[0])
         n_seqs = len(seqs)
         n_clusters = len(TF_inds)
-        
+
         # Transform wild-type sequences
         Xww = self.transformer(seqs)
-        
+
         # Initialize scores array: (n_tfs, n_seqs, seq_len, 4)
         all_scores = [[] for _ in range(n_clusters)]
 
         for s in range(n_seqs):
             mutated_all = self.mutate_seqs([seqs[s]])
-            Xmm = self.transformer(mutated_all)
-            print(f"{s}", end=',', flush=True)
+
+            # Transform mutants in position-batches (mutate_seqs orders them 4 per
+            # position: A,C,G,T) instead of one oversized predict() call on all
+            # 4*seq_len mutants at once -- same batching compute_profile_batched_700
+            # uses, needed here too now that seqs can be full 700bp regions.
+            Xmm_parts = [self.transformer(mutated_all[bs:bs + batch_pos * 4])
+                         for bs in range(0, len(mutated_all), batch_pos * 4)]
+            Xmm = np.concatenate(Xmm_parts, axis=0)
 
             for c, indices in enumerate(TF_inds):
                 # Calculate weighted wild-type: dot product of features and coefficients

@@ -1,3 +1,4 @@
+"""DNA sequence helpers: random background generation, padding, reverse complement."""
 import numpy as np
 import random
 

@@ -1,4 +1,9 @@
-input_files/
+input_files/*
+!input_files/mutagenesis_region_reference.csv
+!input_files/HOCO_uniprot_to_gene.npz
+!input_files/regions.fa
+!input_files/regions_coords.csv
+raw_data/
 output_files/*
 !output_files/*.pkl
 !output_files/*.npy

@@ -1,3 +1,4 @@
+"""Sequence one-hot encoding and Ridge-coefficient bootstrap resampling."""
 import random
 import numpy as np
 from sklearn.utils import resample
@@ -36,6 +37,5 @@ def boot_strap(model, n_bootstraps, X_train, y_train, random_state=42):
         X_resampled, y_resampled = resample(X_train, y_train, random_state=random_state + i)
         model.fit(X_resampled, y_resampled)
         coefficients.append(model.coef_)
-        print(i)
 
     return np.array(coefficients)

@@ -1,3 +1,5 @@
+"""Trains the best-config Ridge model (from grid_search.py's results) for one
+response variable, then computes its mutational and TF contribution profiles."""
 from data_preps import Motifs, TileDataset
 from model_utils import boot_strap
 from mutational_profiles import MutationalProfiles, ContributionProfiles
@@ -91,31 +93,24 @@ print(f"Finished processing config: {key}")
 joblib.dump(model, f'../output_files/Ridge_model_{output}_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.joblib')
 np.save(f'../output_files/Ridge_results_test_{output}_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.npy', result)
 
-print(f"\nSuccess! All results saved to 'Ridge_results_test_{output}_bin{bin_len}bp_{pool_f}pooling_{act_f}_{S}.npy'")
+print(f"\nSuccess! Results saved to 'Ridge_results_test_{output}_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.npy'")
 
 coefs_bs = boot_strap(model, n_bootstraps=1000, X_train=X_train, y_train=y_train)
 
 np.save(f'../output_files/Ridge_coef_bootstrapped_{output}_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.npy', coefs_bs)
 
-print(f"\nSuccess! All bootstrapped coefficients saved to 'Ridge_coef_bootstrapped_{output}_bin{bin_len}bp_{pool_f}pooling_{act_f}_{S}.npy'")
+print(f"\nSuccess! Bootstrapped coefficients saved to 'Ridge_coef_bootstrapped_{output}_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.npy'")
 
 ##############################
 # Caluclate mutational profiles for the test set sequences using the trained model and the same feature transformation pipeline.
 
-file_path = {1002: f'../input_files/motifs_dict_PWM_pseudo_bg_exp3_336tf_{n_mots}mots_aligned.npz',
-             647: f'../input_files/motifs_dict_PWM_pseudo_bg_exp3_JaspHomoLV24_293tf_{n_mots}mots_LNCaP_aligned.npz',
-                732: f'../input_files/motifs_dict_PWM_pseudo_bg_exp3_336tf_{n_mots}mots_aligned_v3.npy'}
-
-if n_mots == 732:
-    motif_pwms = np.load(file_path[n_mots], allow_pickle = True).tolist()
-else:
-    with np.load(file_path[n_mots]) as data:
-        motif_pwms = {key: data[key] for key in data.files}
+with np.load(f'../input_files/motifs_dict_PWM_pseudo_bg_exp3_JaspHomoLV24_293tf_{n_mots}mots_LNCaP_aligned.npz') as data:
+    motif_pwms = {key: data[key] for key in data.files}
 
 with np.load('../input_files/HOCO_uniprot_to_gene.npz') as data:
     conversion = {key: data[key] for key in data.files}   
 
-mut_seqs = np.load('../input_files/mut_seqs-309bp.npy', allow_pickle= True)
+mut_seqs = pd.read_csv('../input_files/mutagenesis_region_reference.csv')['WT_seq'].values
 
 motifs_nmots = Motifs(motif_pwms, conversion)
 model_nmots = MotifModel(motifs_nmots, len_seq = 700)
@@ -129,17 +124,18 @@ mut_calculator = MutationalProfiles(model, transformer_func)
 mut_profs = mut_calculator.compute_mutational_profiles(mut_seqs)
 np.save(f'../output_files/Mutational_profiles_{output}_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.npy', mut_profs)
 
-print(f"\nSuccess! All mutational profiles saved to 'Mutational_profiles_{output}_bin{bin_len}bp_{pool_f}pooling_{act_f}_{S}.npy'")
+print(f"\nSuccess! Mutational profiles saved to 'Mutational_profiles_{output}_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.npy'")
 
 
 # Now calculate contribution profiles for each TF by multiplying the mutational profiles with the model coefficients. This will give us a more interpretable view of how each TF contributes to the predictions across the sequence.
 cont_calculator = ContributionProfiles(model, transformer_func)
-tf_indices = [[i] for i in range(293)] 
+n_tfs = len(np.unique(motifs_nmots.mot_tfs))
+tf_indices = [[i] for i in range(n_tfs)]
 
 # 4. Calculate the scores
-# This will return an array of shape (293, n_seqs, 309, 4)
+# This will return an array of shape (n_tfs, n_seqs, 309, 4)
 scores_tfs = cont_calculator.compute_contribution_profiles(mut_seqs, tf_indices)
 
 np.save(f'../output_files/Contribution_profiles_{output}_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.npy', scores_tfs)
 
-print(f"\nSuccess! All contribution profiles saved to 'Contribution_profiles_{output}_bin{bin_len}bp_{pool_f}pooling_{act_f}_{S}.npy'")
+print(f"\nSuccess! Contribution profiles saved to 'Contribution_profiles_{output}_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.npy'")

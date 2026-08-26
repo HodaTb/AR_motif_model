@@ -1,3 +1,5 @@
+"""Trains the best-config Ridge model for the mutagenesis-fit model (fixed
+hyperparameters, from mutagen_grid_search.py's results)."""
 import sys
 import os
 import pandas as pd
@@ -16,19 +18,16 @@ from data_preps import Motifs
 # Input parameters from command line
 
 n_mots = 647
-bin_len = 700 #700 or 100
 pool_f = 'avg' #'avg' or 'max'
 act_f = 'relu' #'relu' or 'sigmoid'
-strand_agg_ = 'sum'
 act_thr = 4 # np.arange(-2, 18, 2)
 motif_agg = 'avg' #'avg' or 'max'
 alpha = 10**(-1.5)
 
 alpha_exp = np.log10(alpha) # [0] +  np.logspace(-1, 6, 15, base=10).tolist()
 alpha_str = f"10e{str(alpha_exp).replace('.', 'p')}"
-strand_agg = None if strand_agg_ == "S1" else "sum"
-
-S = np.copy(strand_agg_)
+strand_agg = 'sum'
+S = 'S0'
 #########################
 # Load motifs, conversion, and data. Prepare the data and get encoded sequences. 
 with np.load('../input_files/motifs_dict_PWM_pseudo_bg_exp3_JaspHomoLV24_293tf_647mots_LNCaP_aligned.npz') as data:
@@ -97,9 +96,9 @@ result[2] = r2
 
 joblib.dump(model, f'../output_files/Ridge_MutModel_BestConfig_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.joblib')
 np.save(f'../output_files/Ridge_Results_MutModel_TestSet_BestConfig_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.npy', result)
-print(f"\nSuccess! All results saved to 'Ridge_Results_MutModel_TestSet_BestConfig_bin{bin_len}bp_{pool_f}pooling_{act_f}_{S}.npy'")
+print(f"\nSuccess! Results saved to 'Ridge_Results_MutModel_TestSet_BestConfig_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.npy'")
 
 
 coefs_bs = boot_strap(model, n_bootstraps=1000, X_train=X_train, y_train=y_train)
 np.save(f'../output_files/Ridge_coef_bootstrapped_MutModel_BestConfig_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.npy', coefs_bs)
-print(f"\nSuccess! All bootstrapped coefficients saved to 'Ridge_coef_bootstrapped_MutModel_BestConfig_bin{bin_len}bp_{pool_f}pooling_{act_f}_{S}.npy'")
+print(f"\nSuccess! Bootstrapped coefficients saved to 'Ridge_coef_bootstrapped_MutModel_BestConfig_bin{bin_len}bp_{pool_f}pooling_{S}_{act_f}thr{act_thr}_motagg{motif_agg}_alpha{alpha_str}_{n_mots}mots.npy'")

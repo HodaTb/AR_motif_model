@@ -1,3 +1,5 @@
+"""Grid search over pooling/activation/strand-aggregation/motif-aggregation
+hyperparameters for the main STARR-seq tile-fit model."""
 from motif_model import MotifModel
 from data_preps import TileDataset, Motifs
 import numpy as np
@@ -159,5 +161,5 @@ with open(f'../output_files/RidgeCV_3outputs_gridsearch_results_bin{bin_len}bp_{
         'metrics_order': ['MSE', 'PCC', 'R2']
     }, f)
 
-print(f"\nSuccess! All results saved to 'RidgeCV_3outputs_results_bin{bin_len}bp_{pool_f}pooling_{act_f}_{S}.pkl'")
+print(f"\nSuccess! Results saved to 'RidgeCV_3outputs_gridsearch_results_bin{bin_len}bp_{pool_f}pooling_{act_f}_{S}.pkl'")
 

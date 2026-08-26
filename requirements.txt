@@ -18,6 +18,8 @@ upsetplot
 biopython
 liftover
 joblib
+openpyxl
+logomaker
 
 # Running the analysis notebooks
 jupyter

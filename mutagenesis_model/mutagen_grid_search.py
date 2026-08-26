@@ -1,3 +1,5 @@
+"""Grid search over pooling/activation/motif-aggregation hyperparameters for the
+model fit directly to the saturation-mutagenesis dataset."""
 # %%
 from sklearn.model_selection import train_test_split, KFold
 import numpy as np
@@ -179,6 +181,6 @@ with open(f'../output_files/RidgeCV_MutModel_gridsearch_{n_tfs}tfs_results_bin{b
         'metrics_order': ['MSE', 'PCC', 'R2']
     }, f)
 
-print(f"\nSuccess! All results saved to 'RidgeCV_MutModel_{n_tfs}tfs_results_bin{bin_len}bp_{act_f}_{S}.pkl'")
+print(f"\nSuccess! Results saved to 'RidgeCV_MutModel_gridsearch_{n_tfs}tfs_results_bin{bin_len}bp_{act_f}_{S}.pkl'")
 
 

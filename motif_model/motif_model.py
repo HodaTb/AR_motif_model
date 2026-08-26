@@ -1,11 +1,9 @@
+"""Keras model that scans sequences with motif PWMs and aggregates hits into
+per-TF feature vectors. Requires Keras 3 (uses the keras.ops API)."""
 import tensorflow as tf
 import numpy as np
 import keras
 from model_utils import get_encoded_seqs
-
-#Feb 2026
-#Hoda Taeb
-# Requires Keras 3 (uses the keras.ops API).
 
 class MotifModel:
 
@@ -136,7 +134,10 @@ class MotifModel:
 
         elif strand_agg == 'max':
             X_S0 = np.maximum(X_mots, X_mots_RC)
-        
+
+        elif strand_agg is not None:
+            raise ValueError(f"strand_agg must be 'sum', 'max', or None, got {strand_agg!r}")
+
 
         for i, TF in enumerate(tf_unique):
             motifs_mask = (self.mot_tfs == TF)

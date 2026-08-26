@@ -1,15 +1,14 @@
+"""Data containers: TileDataset (STARR-seq tile-fit training data) and Motifs
+(motif PWM dictionary + TF-name bookkeeping)."""
 import numpy as np
-import random
 from model_utils import get_encoded_seqs
 
 class TileDataset:
 
-    def __init__(self, df, *, len_seq = 700, pseudo_count = 5.0, random_seed = 42):
+    def __init__(self, df, *, len_seq = 700, pseudo_count = 5.0):
         self.df = df
         self.pseudo_count = pseudo_count
         self.len_seq = len_seq
-
-        random.seed(random_seed)
 
         self._prepare_data()
 
