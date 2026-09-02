@@ -46,8 +46,8 @@ reference genome at each region's coordinates via the UCSC Genome Browser's Tabl
 
 Some raw inputs used by `data_preprocessing/` (see below) are too large to include directly
 and must be downloaded into a local `raw_data/` folder before running those scripts. The raw
-STARR-seq per-tile counts and coordinates will be deposited on Zenodo (confirmed with the
-original data collaborators) -- [file list and DOI pending, TODO once the deposit is live].
+STARR-seq per-tile counts and coordinates (`lncap-starrseq-counts-per-library-tile-stranded-v3.0.txt`,
+`tile.stranded-unique.bed`) are deposited on Zenodo: [10.5281/zenodo.22259175](https://doi.org/10.5281/zenodo.22259175).
 
 Expected local layout:
 - `input_files/` (mostly gitignored, not included -- see exceptions above) -- processed STARR-seq/mutagenesis datasets, motif PWM dictionaries, and (for `gwas_variant_analysis/`) the GWAS Catalog export, ARBS region coordinates/sequences, and per-region Log2FC table. See the data-availability note at the top of `fig6_gwas_variants.ipynb` for the exact file list. A few additional small files are included directly, despite being regenerable, because doing so avoids rerunning heavy compute steps: `motifs_dict_PWM_pseudo_bg_exp3_JaspHomoLV24_293tf_647mots_LNCaP_aligned.npz` (the compiled motif PWM dictionary, from `build_motif_pwm_dict.py`) and `best_models_hyperparams_MSE_647mots.json`/`best_mutagen_hyperparams_MSE_293tfs.json` (selected hyperparameters, from `figS1_grid_search.ipynb`/`figS3_grid_search.ipynb`, the former required by `train_model_pipeline.py`).

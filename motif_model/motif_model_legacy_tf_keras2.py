@@ -6,7 +6,10 @@ from model_utils import get_encoded_seqs
 #Feb 2026
 #Hoda Taeb
 # Legacy model definition using the TF/Keras-2 (tf.keras) API (tf.one_hot instead of keras.ops.one_hot).
-# Kept for reference; not imported anywhere. Use motif_model.py (Keras 3) for current work.
+# Used by gwas_variant_analysis/fig6_gwas_variants.ipynb, which runs the model's forward
+# pass directly (scoring new GWAS variant sequences) rather than only loading cached
+# results -- requires an environment with Keras 2 (not Keras 3, unlike the rest of the
+# repo). All other notebooks use motif_model.py (Keras 3) for current work.
 
 class MotifModel:
 
