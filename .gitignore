@@ -18,3 +18,4 @@ __pycache__/
 .ipynb_checkpoints/
 *.pyc
 data_preprocessing/PREPROCESSING_TODO.md
+figures/*.svg
