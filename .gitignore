@@ -3,6 +3,9 @@ input_files/*
 !input_files/HOCO_uniprot_to_gene.npz
 !input_files/regions.fa
 !input_files/regions_coords.csv
+!input_files/motifs_dict_PWM_pseudo_bg_exp3_JaspHomoLV24_293tf_647mots_LNCaP_aligned.npz
+!input_files/best_models_hyperparams_MSE_647mots.json
+!input_files/best_mutagen_hyperparams_MSE_293tfs.json
 raw_data/
 output_files/*
 !output_files/*.pkl

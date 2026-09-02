@@ -1,0 +1,8 @@
+{
+  "pooling": "AvgPooling",
+  "activation_function": "ReLU",
+  "activaition_threshold": 4.0,
+  "motif_agg_method": "Motifs_mean",
+  "alpha_value": 0.03162277660168379,
+  "cv_mse": 0.21999905473181763
+}
