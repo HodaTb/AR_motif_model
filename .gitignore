@@ -10,6 +10,7 @@ output_files/*
 !output_files/*.joblib
 output_files/Contribution_profiles_*.npy
 output_files/FeaturesDict_*.pkl
+output_files/arbs_700bp_contribution_profiles.pkl
 __pycache__/
 .ipynb_checkpoints/
 *.pyc

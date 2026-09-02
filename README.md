@@ -6,8 +6,8 @@ A biophysically motivated, interpretable motif-based model of transcription is f
 
 ## Repository structure
 
-- **`motif_model/`** -- the core motif-scanning model (`motif_model.py`, requires Keras 3) and its supporting modules (`data_preps.py`, `dna_utils.py`, `model_utils.py`, `mutational_profiles.py`), the training pipeline for the main STARR-seq tile-fit model (`grid_search.py`, `train_model_pipeline.py`), and the notebooks that reproduce its results: `fig2_tf_weights.ipynb`, `fig3_mutational_validation.ipynb`, `fig5_spatial_model.ipynb`.
-- **`mutagenesis_model/`** -- the training pipeline for the model fit directly to the saturation-mutagenesis dataset (`mutagen_grid_search.py`, `train_mutagen_pipeline.py`), and `fig4_mutagenesis_model_weights.ipynb`.
+- **`motif_model/`** -- the core motif-scanning model (`motif_model.py`, requires Keras 3) and its supporting modules (`data_preps.py`, `dna_utils.py`, `model_utils.py`, `mutational_profiles.py`), the training pipeline for the main STARR-seq tile-fit model (`grid_search.py`, `train_model_pipeline.py`), and the notebooks that reproduce its results: `figS1_grid_search.ipynb` (grid-search visualization; also writes `input_files/best_models_hyperparams_MSE_647mots.json`, read by `train_model_pipeline.py`), `fig2_tf_weights.ipynb` (also produces Table S1, held-out test-set performance), `fig3_mutational_validation.ipynb`, `fig5_spatial_model.ipynb` and `fig5_spatial_model_dht_etoh.ipynb` (LogFC and LogDHT/LogEtOH position-dependent weights, respectively), and `mutagenesis_variant_coverage.ipynb` (what fraction of possible mutagenesis positions/variants are covered by the training data).
+- **`mutagenesis_model/`** -- the training pipeline for the model fit directly to the saturation-mutagenesis dataset (`mutagen_grid_search.py`, `train_mutagen_pipeline.py`), `figS3_grid_search.ipynb` (grid-search visualization; writes `input_files/best_mutagen_hyperparams_MSE_293tfs.json` as a record of the chosen hyperparameters -- `train_mutagen_pipeline.py` itself hardcodes them), and `fig4_mutagenesis_model_weights.ipynb`.
 - **`plotting/`** -- shared plotting utilities (`plot_utils.py`: bootstrap CI, ranked TF-weight bar plots, significant-TF selection) used by the notebooks above.
 - **`gwas_variant_analysis/`** -- `fig6_gwas_variants.ipynb`: intersects prostate cancer GWAS Catalog SNPs with AR binding site (ARBS) regions and applies the fitted LogFC model to prioritize candidate regulatory variants.
 - **`data_preprocessing/`** -- scripts that build `input_files/`'s processed datasets from raw/public data (staged locally in `raw_data/`, see Data availability below): `build_starrseq_fragment_dataset.py` (STARR-seq tile-fit training data), `build_region_log2fc_table.py` (per-region Log2FC table), `build_motif_pwm_dict.py` (motif PWM dictionary), `prepare_mutagenesis_data.py` (saturation-mutagenesis dataset).
@@ -62,7 +62,8 @@ Expected local layout:
 To regenerate `output_files/` from scratch instead of using the included copies:
 
 1. Run the grid searches: `python motif_model/grid_search.py <bin_len> <pool_f> <act_f> <strand_agg>` (main tile-fit model) and `python mutagenesis_model/mutagen_grid_search.py <act_f>` (mutagenesis-fit model). Run from within each script's own directory (`motif_model/` or `mutagenesis_model/`), so that `../input_files/` and `../output_files/` resolve correctly.
-2. Train the best configurations: `python motif_model/train_model_pipeline.py <model_name> <n_mots>` and `python mutagenesis_model/train_mutagen_pipeline.py`.
+2. Run `figS1_grid_search.ipynb` to select the best hyperparameters per config and write `input_files/best_models_hyperparams_MSE_647mots.json` -- required by `train_model_pipeline.py` in the next step. (`figS3_grid_search.ipynb` does the same for the mutagenesis-fit model, but only as a record -- `train_mutagen_pipeline.py` hardcodes its hyperparameters directly.)
+3. Train the best configurations: `python motif_model/train_model_pipeline.py <model_name> <n_mots>` and `python mutagenesis_model/train_mutagen_pipeline.py`.
 
 ## Acknowledgments
 
