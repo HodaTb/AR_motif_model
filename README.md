@@ -1,6 +1,6 @@
 # AR_motif_model
 
-Code accompanying **"Motif-based model of transcription predicts effects of sequence variants in AR enhancers and reveals distinct functions for AR-associated transcription factors"** (Taeb, Safaeesirat, Tekoglu, Xiao, Huang, Lack, and Emberly).
+Code accompanying **"Motif-based model of transcription predicts effects of sequence variants in AR enhancers and reveals distinct functions for AR-associated transcription factors"** (Taeb, Safaeesirat, Tekoglu, Huang, Xiao, Lack, and Emberly).
 
 A biophysically motivated, interpretable motif-based model of transcription is fit to STARR-seq measurements of androgen receptor (AR) enhancer activity in LNCaP cells, resolving transcription factors (TFs) into hormone-dependent factors, constitutive activators, and dual-role factors. The model is validated against an independent saturation-mutagenesis dataset and applied to prostate cancer GWAS risk variants overlapping AR binding sites.
 
@@ -77,6 +77,6 @@ MIT -- see [LICENSE](LICENSE).
 
 If you use this code, please cite the manuscript:
 
-> Taeb H, Safaeesirat A, Tekoglu E, Xiao K, Huang CCF, Lack NA, Emberly E. *Motif-based model of transcription predicts effects of sequence variants in AR enhancers and reveals distinct functions for AR-associated transcription factors.* bioRxiv. 2026. https://doi.org/10.64898/2026.09.02.748967.
+> Taeb H, Safaeesirat A, Tekoglu E, Huang CCF, Xiao K, Lack NA, Emberly E. *Motif-based model of transcription predicts effects of sequence variants in AR enhancers and reveals distinct functions for AR-associated transcription factors.* bioRxiv. 2026. https://doi.org/10.64898/2026.09.02.748967.
 
 *Citation details will be updated with the journal reference upon publication.*
