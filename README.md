@@ -77,6 +77,6 @@ MIT -- see [LICENSE](LICENSE).
 
 If you use this code, please cite the manuscript:
 
-> Taeb H, Safaeesirat A, Tekoglu E, Xiao K, Huang CCF, Lack NA, Emberly E. Motif-based model of transcription predicts effects of sequence variants in AR enhancers and reveals distinct functions for AR-associated transcription factors. (manuscript in preparation).
+> Taeb H, Safaeesirat A, Tekoglu E, Xiao K, Huang CCF, Lack NA, Emberly E. *Motif-based model of transcription predicts effects of sequence variants in AR enhancers and reveals distinct functions for AR-associated transcription factors.* bioRxiv. 2026. https://doi.org/10.64898/2026.09.02.748967.
 
-*(Citation details will be updated with the DOI/journal reference upon publication.)*
+*Citation details will be updated with the journal reference upon publication.*
